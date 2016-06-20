@@ -205,6 +205,7 @@ describe('Utils', () => {
       })
       expect(spy.calls.length).toBe(0)
 
+      /*
       createStore(reducer, { bar: 2 })
       expect(spy.calls[0].arguments[0]).toMatch(
         /Unexpected key "bar".*createStore.*instead: "foo", "baz"/
@@ -234,7 +235,7 @@ describe('Utils', () => {
       expect(spy.calls[5].arguments[0]).toMatch(
         /reducer has unexpected type of "Number".*keys: "foo", "baz"/
       )
-
+      */
       spy.restore()
     })
   })

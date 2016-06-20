@@ -34,6 +34,8 @@ function getUnexpectedStateShapeWarningMessage(inputState, reducers, action) {
     )
   }
 
+    
+  /* commented out by giles
   var unexpectedKeys = Object.keys(inputState).filter(key => !reducers.hasOwnProperty(key))
 
   if (unexpectedKeys.length > 0) {
@@ -44,6 +46,7 @@ function getUnexpectedStateShapeWarningMessage(inputState, reducers, action) {
       `"${reducerKeys.join('", "')}". Unexpected keys will be ignored.`
     )
   }
+  */
 }
 
 function assertReducerSanity(reducers) {
@@ -122,6 +125,12 @@ export default function combineReducers(reducers) {
 
     var hasChanged = false
     var nextState = {}
+    /* hack by giles - dont worry about unexpected keys */
+    // GB leave anything in state...
+    var stateKeys = Object.keys(state)
+    for(var ii = 0; ii < stateKeys.length; ii++) {
+      nextState[stateKeys[ii]] = state[stateKeys[ii]]
+    }
     for (var i = 0; i < finalReducerKeys.length; i++) {
       var key = finalReducerKeys[i]
       var reducer = finalReducers[key]
