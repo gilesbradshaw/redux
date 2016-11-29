@@ -1,5 +1,5 @@
 import isPlainObject from 'lodash/isPlainObject'
-import $$observable from 'symbol-observable'
+//import $$observable from 'symbol-observable'
 
 /**
  * These are private action types reserved by Redux.
@@ -36,7 +36,26 @@ export var ActionTypes = {
  * @returns {Store} A Redux store that lets you read the state, dispatch actions
  * and subscribe to changes.
  */
+
+var $$observable
+
 export default function createStore(reducer, initialState, enhancer) {
+  // this is a bit tacky but gets round problems with ie
+  if(!$$observable) {
+    var Symbol = window.Symbol
+    if(typeof Symbol === 'function') {
+      if (Symbol.observable) {
+        $$observable = Symbol.observable
+      } else {
+        $$observable = Symbol('observable')
+        Symbol.observable = $$observable
+      }
+    } else {
+      $$observable = '@@observable'
+    }
+  }
+
+
   if (typeof initialState === 'function' && typeof enhancer === 'undefined') {
     enhancer = initialState
     initialState = undefined
